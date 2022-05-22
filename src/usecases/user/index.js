@@ -1,4 +1,4 @@
-const User = require('../models/users.js').model;
+const User = require('../../models/users').model;
 
 const getAll = async() => {
     return await User.find({}).exec();

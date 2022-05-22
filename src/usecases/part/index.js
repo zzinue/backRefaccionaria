@@ -1,4 +1,4 @@
-const Part = require('../models/autopart').model;
+const Part = require('../../models/parts').model;
 
 const getAll = async() => {
     return await Part.find({}).exec();
@@ -14,21 +14,20 @@ const create = async(partData) => {
     return savePart;
 }
 const update = async(id, partData) => {
-    const { name, price, description, image } = partData;
-    const updatePart = await Part.findByIdAndUpdate(id, { name, price, description, image }, { new: true }).exec();
-    return updatePart;
-}
-const patch = async(id, partData) => {
-    return await Part.findByIdAndUpdate(id, {...partData }, { new: true }).exec();
-}
+        const { name, price, description, image } = partData;
+        const updatePart = await Part.findByIdAndUpdate(id, { name, price, description, image }, { new: true }).exec();
+        return updatePart;
+    }
+    /* const patch = async(id, partData) => {
+        return await Part.findByIdAndUpdate(id, {...partData }, { new: true }).exec();
+    } */
 const del = async(id) => {
     return await Part.findByIdAndDelete(id).exec();
 }
-module.exports {
+module.exports = {
     getAll,
     getById,
     create,
     update,
-    patch,
     del
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const part = require('../usecases/parts');
+const part = require('../usecases/part');
 
 const router = express.Router();
 
