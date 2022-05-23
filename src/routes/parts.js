@@ -1,5 +1,6 @@
 const express = require('express');
 const part = require('../usecases/part');
+const { authHandler } = require('../middlewares/authHandlers')
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get('/:id', async(req, res) => {
     const payload = await part.getById(id);
     res.json({ success: true, payload });
 })
-router.post('/', async(req, res, next) => {
+router.post('/', authHandler, async(req, res, next) => {
     try {
         const { name, price, description, image } = req.body;
         const partCreated = await part.create({ name, price, description, image });
@@ -32,7 +33,7 @@ router.post('/', async(req, res, next) => {
         next(err);
     }
 })
-router.put('/:id', async(req, res, next) => {
+router.put('/:id', authHandler, async(req, res, next) => {
     try {
         const { id } = req.params;
         const { name, price, description, image } = req.body;
@@ -46,7 +47,7 @@ router.put('/:id', async(req, res, next) => {
         next(err);
     }
 })
-router.patch('/:id', async(req, res, next) => {
+router.patch('/:id', authHandler, async(req, res, next) => {
     try {
         const { id } = req.params;
         const partUpdated = await part.patch(id, {...req.body });
@@ -59,7 +60,7 @@ router.patch('/:id', async(req, res, next) => {
         next(err);
     }
 })
-router.delete('/:id', async(req, res, next) => {
+router.delete('/:id', authHandler, async(req, res, next) => {
     try {
         const { id } = req.params;
         const partDeleted = await part.del(id);

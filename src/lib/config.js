@@ -5,7 +5,7 @@ const config = {
         port: process.env.APP_PORT || 80,
         name: process.env.APP_NAME,
         debug: process.env.debug || false,
-        /* jwtSecret: process.env.JWT_SECRET, */
+        jwtSecret: process.env.JWT_SECRET,
     },
     db: {
         user: process.env.DB_USER,
