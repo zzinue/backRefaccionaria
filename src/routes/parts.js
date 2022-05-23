@@ -1,6 +1,7 @@
 const express = require('express');
 const part = require('../usecases/part');
-const { authHandler } = require('../middlewares/authHandlers')
+const { authHandler } = require('../middlewares/authHandlers');
+const { adminHanlder } = require('../middlewares/permissionHandlers');
 
 const router = express.Router();
 
@@ -60,7 +61,7 @@ router.patch('/:id', authHandler, async(req, res, next) => {
         next(err);
     }
 })
-router.delete('/:id', authHandler, async(req, res, next) => {
+router.delete('/:id', authHandler, adminHanlder, async(req, res, next) => {
     try {
         const { id } = req.params;
         const partDeleted = await part.del(id);
