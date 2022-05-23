@@ -22,7 +22,7 @@ const create = async(userData) => {
     return await newUser.save();
 }
 const update = async(id, userData) => {
-    return await User.findByIdAndUpdate(id, {...userData }, { new: true }).exec();
+    return await User.findByIdAndUpdate(id, {...userData, }, { new: true }).exec();
 }
 const del = async(id) => {
     return await User.findByIdAndDelete(id).exec();
