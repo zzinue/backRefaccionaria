@@ -1,16 +1,18 @@
 const express = require('express');
 const user = require('../usecases/user');
+const { authHandler } = require('../middlewares/authHandlers');
+const { adminHanlder } = require('../middlewares/permissionHandlers');
 
 const router = express.Router();
 
-router.get('/', async(req, res) => {
+router.get('/', authHandler, adminHanlder, async(req, res) => {
     const users = await user.getAll();
     res.json({
         success: true,
         payload: users
     })
 })
-router.get('/:id', async(req, res) => {
+router.get('/:id', authHandler, async(req, res) => {
     try {
         const { id } = req.params;
         const retrievedPart = await user.getById(id);
@@ -35,7 +37,7 @@ router.post('/', async(req, res, next) => {
         next(err);
     }
 })
-router.put('/:id', async(req, res, next) => {
+router.put('/:id', authHandler, async(req, res, next) => {
     try {
         const { id } = req.params;
         const { username, email, password, role } = req.body;
@@ -49,7 +51,7 @@ router.put('/:id', async(req, res, next) => {
         next(err);
     }
 })
-router.patch('/:id', async(req, res, next) => {
+router.patch('/:id', authHandler, async(req, res, next) => {
     try {
         const { id } = req.params;
         const userUpdated = await user.patch(id, {...req.body });
@@ -62,7 +64,7 @@ router.patch('/:id', async(req, res, next) => {
         next(err);
     }
 })
-router.delete('/:id', async(req, res, next) => {
+router.delete('/:id', adminHanlder, async(req, res, next) => {
     try {
         const { id } = req.params;
         const userDeleted = await user.del(id);
